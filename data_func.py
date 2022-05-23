@@ -22,12 +22,17 @@ class items_api:
     def get_data(self,id = None, name = None):
         ''' 
         Function for retrieving data from the database depending if an id or a name was search or both
+
+        param id: (int) the id of the item 
+        param name: (string) the name of the item 
+
+        return: (list) the data that was found in the database with the id or name
         '''
         print(id)
         print(name)
         temp_data = []
 
-        #they passed bad data
+        #no data was passed
         if not name and not id:
             return []
 
@@ -54,6 +59,10 @@ class items_api:
     def post_data(self,id = None, name = None):
         '''
         Function for adding items to the storage
+
+        param id: (int) the id of the item 
+        param name: (string) the name of the item 
+
         '''
         #adding to the db
         if not name or not id:
@@ -70,6 +79,10 @@ class items_api:
     def delete_data(self,id = None, name = None):
         '''
         Function for deleting items from the storage
+
+        param id: (int) the id of the item 
+        param name: (string) the name of the item 
+
         '''
         if not name or not id:
             return 0
