@@ -60,9 +60,12 @@ class items_api:
             return 0
 
         #should include type checking
-        self.db.append({'id': id, 'name': name})
-        
-        return 1 #bool value to know it was successful
+        if {'id': id, 'name': name} in self.db:
+            print('entry already exists')
+            return 0
+        else:
+            self.db.append({'id': id, 'name': name})
+            return 1 #bool value to know it was successful
 
     def delete_data(self,id = None, name = None):
         '''
@@ -107,7 +110,34 @@ class items_api:
             return []
 
         if request.method == "POST":
-            return []
+            # action = request.args.get('action') #this is how i will be recieving the data
+            # id = request.args.get('id')
+            # name = request.args.get('name') 
+
+
+            data = request.json
+            # id = request.json['id']
+            # name = request.json['name']
+            id = data['id']
+            name = data['name']
+
+            print(data)
+            if not data:
+                return jsonify([])
+
+            if data['action'] == 'post':
+                print('posting')
+                return jsonify(self.post_data(id,name))
+
+            if data['action'] == 'delete':
+                print('deleting')
+                return jsonify(self.delete_data(id,name))
+
+            if data['action'] == 'delete_all':
+                print('deleting all')
+                return jsonify(self.DELETE_ALL())
+
+            return jsonify([])
 
 
 
