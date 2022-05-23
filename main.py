@@ -31,46 +31,9 @@ def my_items():
     
     '''
 
-    #TODO - this function will be an endpoint but all data functions and request function will be done through another class
-    if request.method == "GET":
-        #-- only use this to look for data 
-
-        #placeholder for more meaningful data
-        # print(request.data , '--inc value')
-
-        # action = request.args.get('action') #this is how i will be recieving the data
-        id = int(request.args.get('id'))
-        name = request.args.get('name')
-        print(id,name)
-        data = items_func.get_data(id,name)
-
-
-        return jsonify(data)
-
-
-
-
-        #placeholder for more meaningful data
-    if request.method == "POST":
-        #-- use this to modify delete
-        
-        # print(request)
-
-        
-        data = request.get_json() #this is how i will be recieving the data
-        # print(data)
-
-        other_data = request.get_json() #this is how i will be recieving the data
-       
-        # print(other_data)
-
-        print('recieving values::')
-        print(request.values)
-
-
-        return jsonify({'id': data,
-                       'name': other_data}) 
-
+    r = request
+    #calling all the functions in another class
+    return items_func.incoming_req(r)
 
 
 
