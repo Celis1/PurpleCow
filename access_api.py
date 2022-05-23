@@ -23,7 +23,7 @@ temp3 = {"action": "post", "id": 123 , "name": "herold"}
 r = requests.post(website_name + "/items", json=temp3)
 print(r.text)
 
-r = requests.post(website_name + "/items", json=temp3)
-print(r.text)
+# r = requests.post(website_name + "/items", json=temp3)
+# print(r.text)
 
 

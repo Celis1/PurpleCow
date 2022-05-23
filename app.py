@@ -17,7 +17,7 @@ items_func = items_api()
 def hello_world():
     #TODO - create and render the template for the webapp
     # return render_template('index.html')
-    return "<p>Hello, World!</p>"
+    return "<p>Welcome to the dockerized web application for getting, posting, and deleting items in a list</p>"
 
 
 
@@ -46,4 +46,5 @@ def all_items():
 if __name__ == "__main__":
     #setting the host to local setting the port to 3000 and disabling debug mode
     #TODO - disable debug mode
-    app.run(host="localhost", port=3000, debug=True)
+    # app.run(host="localhost", port=3000, debug=True)
+    app.run(debug=True)
