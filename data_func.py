@@ -14,12 +14,17 @@ class items_api:
 
         self.db = [ {'id': 1,'name': 'joe'},
                     {'id': 2,'name': 'anny'},
-                    {'id': 3,'name': 'suzy'}]
+                    {'id': 3,'name': 'suzy'},
+                    {'id': 10,'name': 'joe'} ]
         
 
 
     def get_data(self,id = None, name = None):
-        print('--searching for data --')
+        ''' 
+        Function for retrieving data from the database depending if an id or a name was search or both
+        '''
+        print(id)
+        print(name)
         temp_data = []
 
         #they passed bad data
@@ -31,19 +36,27 @@ class items_api:
 
             #if i have their id 
             if id == self.db[i]['id']:
-                #if the 
                 temp_data.append(self.db[i])
 
-            if name == self.db[i]['name']:
+            #if i have their name
+            elif name == self.db[i]['name']:
                 #serach through the values
                 temp_data.append(self.db[i])
+        
+        #checking if we found specific value
+        if id and name:
+            if {'id': id, 'name': name} in temp_data:
+                print('found search')
+                temp_data = [{'id': id, 'name': name}]
 
-      
         return temp_data
 
     def post_data(self,id = None, name = None):
+        '''
+        Function for adding items to the storage
+        '''
         #adding to the db
-        if not name and not id:
+        if not name or not id:
             return 0
 
         #should include type checking
@@ -52,6 +65,9 @@ class items_api:
         return 1 #bool value to know it was successful
 
     def delete_data(self,id = None, name = None):
+        '''
+        Function for deleting items from the storage
+        '''
         for i in range(len(self.db)):
             if self.db[i] == {'id': id, 'name': name}:
                 self.db.pop(i)
@@ -60,45 +76,38 @@ class items_api:
         return 0 #this means nothing was deleted
 
     def DELETE_ALL(self):
+        '''
+        This function will delete all entries in the storage
+        '''
         #delete all items   
         self.db = []
         return 1
 
     def incoming_req(self, request):
+        '''
+        Method for handling the incoming requests and accessing the storad data depending 
+        on the values passed through the request.
+        '''
         #this is the request that is coming in
-        # print(request.method)
         if request.method == "GET":
-            #-- only use this to look for data 
 
-            #placeholder for more meaningful data
-            # print(request.data , '--inc value')
+            action = request.args.get('action') #this is how i will be recieving the data
+            id = request.args.get('id')
+            name = request.args.get('name')
 
+            if not action or action == 'get':
+                try:
+                    id = int(id)
+                except:
+                    id = None
+                    print('id could not be converted to int')
 
-            #--- I NEED TO SEARCH DEPENDING ON THE VALUE PASSED IN 
-            data = request.args.get('my_value') #this is how i will be recieving the data
-            # print(data)
-
-
-            if isinstance(data, int):
-                print('data was a string')
-                #ill prob conver to a list and return the data
-
-            elif isinstance(data, list):
-                print('data was a list')
-                # we want to keep this to enable multiple searches
-
-            
-            #now we will search the databse for the data
-            self.get_data(data)
-
-
-
-            return jsonify({'id': '111111',
-                        'name': data})
-
+                data = self.get_data(id,name)
+                return jsonify(data)
+            return []
 
         if request.method == "POST":
-            pass
+            return []
 
 
 
@@ -114,16 +123,21 @@ if __name__ == '__main__':
     temp = u.get_data( name = 'suzy')
     print(temp)
 
-    print()
-    temp = u.post_data(id = 87, name = 'jacob')
 
+    temp = u.post_data(id = 87, name = 'jacob')
     print(temp)
     print(u.db)
 
 
-    # u.database_list = ['new', 'list']
-    # print(u.database_list)
+    temp = u.delete_data(id=3, name = 'suzy')
+    print(temp)
+    print(u.db)
 
-    # print('-----------')
+    temp = u.delete_data(id = 2, name = 'anny')
+    print(temp)
+    print(u.db)
 
-    
+    temp = u.DELETE_ALL()
+    print(temp)
+    print(u.db)
+
