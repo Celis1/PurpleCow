@@ -71,6 +71,9 @@ class items_api:
         '''
         Function for deleting items from the storage
         '''
+        if not name or not id:
+            return 0
+
         for i in range(len(self.db)):
             if self.db[i] == {'id': id, 'name': name}:
                 self.db.pop(i)
@@ -110,21 +113,24 @@ class items_api:
             return []
 
         if request.method == "POST":
-            # action = request.args.get('action') #this is how i will be recieving the data
-            # id = request.args.get('id')
-            # name = request.args.get('name') 
-
-
             data = request.json
-            # id = request.json['id']
-            # name = request.json['name']
-            id = data['id']
-            name = data['name']
+            id = None
+            name = None
 
-            print(data)
             if not data:
                 return jsonify([])
-
+            
+            #checking that they passed an id value
+            if 'id' in data:
+                try:
+                    id = int(data['id'])
+                except:
+                    print('id could not be converted to int')
+               
+            #checking that they passed a name value 
+            if 'name' in data:
+                name = data['name']
+         
             if data['action'] == 'post':
                 print('posting')
                 return jsonify(self.post_data(id,name))
