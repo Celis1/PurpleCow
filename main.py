@@ -35,7 +35,12 @@ def my_items():
     #calling all the functions in another class
     return items_func.incoming_req(r)
 
-
+@app.route("/all_items",  methods=['GET'])
+def all_items():
+    '''
+    View the entire db in storage
+    '''
+    return jsonify(items_func.db)
 
 
 if __name__ == "__main__":
