@@ -15,9 +15,20 @@ items_func = items_api()
 #This is the main page
 @app.route("/")
 def hello_world():
-    #TODO - create and render the template for the webapp
-    # return render_template('index.html')
-    return "<p>Welcome to the dockerized web application for getting, posting, and deleting items in a list</p>"
+    hello_world = '''<h1>Welcome to the dockerized web application</h1>
+    <h3>This api service is for getting, posting, and deleting items in a list. </h3>
+    <li>To view in browser navigate to the /all_items page to view the entire db in storage. </li>
+    <li>You can also use get/post request to view, manipulate, or delete the data. </li>
+    <li>both get and post methods have 3 params action, id, name. </li>
+    <li>the param action are either get, post, delete, or delete_all. </li>
+    <li>id is an integer and name is the casesensitive string. </li>
+    
+    <br>
+
+    <form action="/all_items">
+    <input type="submit" value="View database entries" />
+    </form>'''
+    return hello_world
 
 
 
@@ -44,7 +55,5 @@ def all_items():
 
 
 if __name__ == "__main__":
-    #setting the host to local setting the port to 3000 and disabling debug mode
-    #TODO - disable debug mode
-    # app.run(host="localhost", port=3000, debug=True)
-    app.run(debug=True)
+    #running the application
+    app.run(debug=False)
