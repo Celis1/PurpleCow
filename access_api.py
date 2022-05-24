@@ -47,7 +47,7 @@ sleep(2)
 
 
 #deleting the entire database
-temp4 = {"action": "delete_all", "id": 4 , "name": "johny"}
+temp4 = {"action": "delete_all"}
 r = requests.post(website_name + "/items", json=temp4)
 print(r.text)
 sleep(2)

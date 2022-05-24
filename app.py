@@ -33,15 +33,13 @@ def hello_world():
 
 
 #this is the items page that we will be editing through the api
-#TODO - add Variable Rules (only want the correct type of data coming in)
 @app.route("/items",  methods=['GET','POST'])
 def my_items():
     '''
     This is the items page that we will be editing through the api. This is an endpoint that 
     communicates with my items_api class.
-    
     '''
-
+    
     r = request
     #calling all the functions in another class
     return items_func.incoming_req(r)
